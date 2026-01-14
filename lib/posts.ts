@@ -4,6 +4,8 @@ import path from "node:path";
 import matter from "gray-matter";
 import { cache } from "react";
 
+export type PostLayout = "default" | "cover-full" | "no-cover";
+
 export type PostFrontMatter = {
   title: string;
   image?: string;
@@ -12,6 +14,7 @@ export type PostFrontMatter = {
   category?: string;
   tags?: string[];
   description?: string;
+  layout?: PostLayout;
 };
 
 export type PostMeta = PostFrontMatter & {
@@ -45,6 +48,11 @@ function normalizeFrontMatter(
 
   const published = typeof data.published === "string" ? data.published : undefined;
 
+  const validLayouts: PostLayout[] = ["default", "cover-full", "no-cover"];
+  const layout = validLayouts.includes(data.layout as PostLayout)
+    ? (data.layout as PostLayout)
+    : undefined;
+
   return {
     slug,
     title,
@@ -55,6 +63,7 @@ function normalizeFrontMatter(
     category: typeof data.category === "string" ? data.category : undefined,
     tags,
     description: typeof data.description === "string" ? data.description : undefined,
+    layout,
   };
 }
 

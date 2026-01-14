@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { siteConfig } from "@/lib/config";
-import { getAllPostsMeta } from "@/lib/posts";
+import { getAllPostsMeta, type PostMeta } from "@/lib/posts";
 
 export const dynamic = "force-static";
 
@@ -12,6 +12,151 @@ function formatDate(date: Date | null) {
     month: "2-digit",
     day: "2-digit",
   }).format(date);
+}
+
+interface PostCardProps {
+  post: PostMeta;
+}
+
+function PostCard({ post }: PostCardProps) {
+  const layout = post.layout || "default";
+
+  return (
+    <article
+      className={`overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950 ${
+        layout === "cover-full" ? "h-96" : ""
+      }`}
+    >
+      <Link href={`/posts/${post.slug}`} className="block h-full">
+        {layout === "no-cover" ? (
+          <div className="p-5">
+            <div className="flex flex-wrap gap-2">
+              {post.pinned ? (
+                <span className="rounded-full bg-zinc-900/90 px-2.5 py-1 text-xs font-semibold text-white dark:bg-white/90 dark:text-zinc-900">
+                  置顶
+                </span>
+              ) : null}
+              {post.category ? (
+                <span className="rounded-full bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-900 dark:bg-zinc-800 dark:text-zinc-50">
+                  {post.category}
+                </span>
+              ) : null}
+            </div>
+            <h2 className="mt-3 text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+              {post.title}
+            </h2>
+            {post.description ? (
+              <p className="mt-2 line-clamp-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
+                {post.description}
+              </p>
+            ) : null}
+            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+              {formatDate(post.publishedAt) ? (
+                <span>{formatDate(post.publishedAt)}</span>
+              ) : null}
+              {post.tags?.length ? (
+                <span className="flex flex-wrap gap-1">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 dark:border-zinc-800 dark:bg-zinc-900"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </span>
+              ) : null}
+            </div>
+          </div>
+        ) : (
+          <div className={`relative ${layout === "cover-full" ? "h-full" : ""}`}>
+            <div
+              className={`overflow-hidden bg-zinc-100 dark:bg-zinc-900 ${
+                layout === "cover-full" ? "h-full" : "h-44 w-full"
+              }`}
+            >
+              {post.image ? (
+                <img
+                  src={post.image}
+                  alt=""
+                  className={`object-cover ${layout === "cover-full" ? "h-full w-full" : "h-full w-full"}`}
+                  loading="lazy"
+                />
+              ) : (
+                <div className="h-full w-full bg-gradient-to-br from-zinc-200 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950" />
+              )}
+            </div>
+
+            <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+              {post.pinned ? (
+                <span className="rounded-full bg-zinc-900/90 px-2.5 py-1 text-xs font-semibold text-white dark:bg-white/90 dark:text-zinc-900">
+                  置顶
+                </span>
+              ) : null}
+              {post.category ? (
+                <span className="rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-zinc-900 backdrop-blur dark:bg-zinc-950/80 dark:text-zinc-50">
+                  {post.category}
+                </span>
+              ) : null}
+            </div>
+
+            {layout === "default" ? (
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent px-5 py-4">
+                <h2 className="text-lg font-semibold tracking-tight text-white">
+                  {post.title}
+                </h2>
+                <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-zinc-200">
+                  {formatDate(post.publishedAt) ? (
+                    <span>{formatDate(post.publishedAt)}</span>
+                  ) : null}
+                  {post.tags?.length ? (
+                    <span className="flex flex-wrap gap-1">
+                      {post.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-white/30 bg-white/10 px-2 py-0.5"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </span>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        )}
+
+        {layout === "cover-full" && post.description ? (
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent px-5 py-6">
+            <h2 className="text-xl font-bold tracking-tight text-white">
+              {post.title}
+            </h2>
+            <p className="mt-2 line-clamp-2 text-sm text-zinc-100">
+              {post.description}
+            </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-zinc-200">
+              {formatDate(post.publishedAt) ? (
+                <span>{formatDate(post.publishedAt)}</span>
+              ) : null}
+              {post.tags?.length ? (
+                <span className="flex flex-wrap gap-1">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/30 bg-white/10 px-2 py-0.5"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </span>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+      </Link>
+    </article>
+  );
 }
 
 export default async function Home() {
@@ -65,77 +210,13 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-col gap-6">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <article
-            key={post.slug}
-            className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950"
-          >
-            <Link href={`/posts/${post.slug}`} className="block">
-              <div className="relative">
-                <div className="h-44 w-full overflow-hidden bg-zinc-100 dark:bg-zinc-900">
-                  {post.image ? (
-                    <img
-                      src={post.image}
-                      alt=""
-                      className="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-zinc-200 to-zinc-100 dark:from-zinc-900 dark:to-zinc-950" />
-                  )}
-                </div>
-
-                <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-                  {post.pinned ? (
-                    <span className="rounded-full bg-zinc-900/90 px-2.5 py-1 text-xs font-semibold text-white dark:bg-white/90 dark:text-zinc-900">
-                      置顶
-                    </span>
-                  ) : null}
-                  {post.category ? (
-                    <span className="rounded-full bg-white/90 px-2.5 py-1 text-xs font-medium text-zinc-900 backdrop-blur dark:bg-zinc-950/80 dark:text-zinc-50">
-                      {post.category}
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-
-              <div className="px-5 py-5">
-                <h2 className="text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-                  {post.title}
-                </h2>
-
-                {post.description ? (
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                    {post.description}
-                  </p>
-                ) : null}
-
-                <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
-                  {formatDate(post.publishedAt) ? (
-                    <span>{formatDate(post.publishedAt)}</span>
-                  ) : null}
-
-                  {post.tags?.length ? (
-                    <span className="flex flex-wrap gap-1">
-                      {post.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-zinc-200 bg-zinc-50 px-2 py-0.5 dark:border-zinc-800 dark:bg-zinc-900"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </span>
-                  ) : null}
-                </div>
-              </div>
-            </Link>
-          </article>
+          <PostCard key={post.slug} post={post} />
         ))}
 
         {posts.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-zinc-300 p-10 text-center text-sm text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
+          <div className="col-span-full rounded-2xl border border-dashed border-zinc-300 p-10 text-center text-sm text-zinc-600 dark:border-zinc-700 dark:text-zinc-400">
             还没有文章。请将 markdown 放到 <code>content/posts</code>。
           </div>
         ) : null}
