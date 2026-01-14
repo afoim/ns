@@ -18,3 +18,4 @@ pnpm-debug.log*
 
 # typescript
 tsconfig.tsbuildinfo
+next-env.d.ts
