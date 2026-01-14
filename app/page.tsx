@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { siteConfig } from "@/lib/config";
 import { getAllPostsMeta } from "@/lib/posts";
 
 export const dynamic = "force-static";
@@ -18,11 +19,46 @@ export default async function Home() {
 
   return (
     <main className="pt-6">
+      {/* Profile Section */}
+      <div className="mb-12 flex flex-col items-center gap-6 rounded-2xl border border-zinc-200 bg-white p-8 shadow-sm dark:border-zinc-800 dark:bg-zinc-950 sm:flex-row sm:items-start">
+        <img
+          src={siteConfig.profile.avatar}
+          alt={siteConfig.profile.name}
+          className="h-24 w-24 rounded-full border-2 border-zinc-200 dark:border-zinc-800"
+        />
+        <div className="flex-1 text-center sm:text-left">
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
+            {siteConfig.profile.name}
+          </h1>
+          <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            @{siteConfig.profile.alias}
+          </p>
+          <p className="mt-3 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
+            {siteConfig.subtitle}
+          </p>
+          {siteConfig.officialSites.length > 0 ? (
+            <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
+              {siteConfig.officialSites.map((site) => (
+                <a
+                  key={site.url}
+                  href={site.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full border border-zinc-300 bg-zinc-50 px-3 py-1 text-xs font-medium text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                >
+                  {site.alias}
+                </a>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </div>
+
       <div className="flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
+          <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
             文章
-          </h1>
+          </h2>
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
             Markdown 即源码，无后台，静态为主。
           </p>
