@@ -19,6 +19,12 @@ export default function SiteHeader() {
             文章
           </Link>
           <Link
+            href="/links"
+            className="hover:text-zinc-900 dark:hover:text-zinc-50"
+          >
+            友链
+          </Link>
+          <Link
             href="/sponsors"
             className="hover:text-zinc-900 dark:hover:text-zinc-50"
           >
