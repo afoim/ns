@@ -1,6 +1,6 @@
 ---
 title: 利用自定义HTTP请求头Host字段实现单节点分流域名的监控
-published: 2026-01-13T17:28:33
+published: 2026-01-13
 description: 如果说你有个分流域名，正常来说我们需要两个监测源模拟国内和海外用户访问，但真的需要这么麻烦吗...
 image: ../assets/images/http-header-host.png
 draft: false

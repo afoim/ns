@@ -1,6 +1,6 @@
 ---
 title: 想要一个匿名文件上载器？一行命令装好！
-published: 2025-12-11T09:08:55
+published: 2025-12-11
 description: 有时候我们可能出门在外想要带文件回家，但是U盘插来插去并不优雅，那么，我们可以尝试在自家电脑启动一个匿名文件上载器，然后将其暴露到公网！
 image: ../assets/images/83e64b93c9f130785f89ccbcd60a7844.png
 tags:

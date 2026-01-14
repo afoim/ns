@@ -1,6 +1,6 @@
 ---
 title: 全自动ICP查询API
-published: 2025-09-12T04:50:10
+published: 2025-09-12
 description: '突然听到个很有意思的项目：自动ICP查询，搜集了一下市面上的轮子然后改改，嗯！能用了！'
 image: '../assets/images/2025-09-12-04-52-16-image.png'
 tags: [ICP]
