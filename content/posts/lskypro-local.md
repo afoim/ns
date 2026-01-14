@@ -1,6 +1,6 @@
 ---
 title: lskypro+本地无需授权开心版！
-published: 2025-08-22T04:16:23
+published: 2025-08-22
 description: '突然发现交付给我的项目是源码，那还逆向什么授权，直接永远返回true呗~'
 image: '../assets/images/2025-08-22-04-17-46-18322f2da2a90304be50614169ab655a.png'
 tags: [兰空图床]

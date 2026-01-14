@@ -1,6 +1,6 @@
 ---
 title: 本站遭受了建站以来规模最大的一次DDoS攻击，总流量6.65TB，峰值瞬发1.95GB/s
-published: 2025-12-16T08:28:59
+published: 2025-12-16
 description: 不是哥们，静态也打？
 image: ../assets/images/ddos-6t.png
 draft: false

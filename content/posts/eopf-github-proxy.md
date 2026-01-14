@@ -1,6 +1,6 @@
 ---
 title: 在EdgeOne Page Function上搭建一个Github全站反代！
-published: 2025-08-30T20:28:35
+published: 2025-08-30
 description: '很早就关注了eopf这个平台，今天终于将基于CF Worker的Github全站反代移植过来了！'
 image: '../assets/images/2025-08-30-20-34-21-image.png'
 tags: [EdgeOne]
