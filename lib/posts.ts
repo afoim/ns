@@ -28,8 +28,20 @@ const postsDir = path.join(process.cwd(), "content", "posts");
 
 function toDate(value: unknown): Date | null {
   if (typeof value !== "string") return null;
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return null;
+  
+  // Handle edge cases
+  const trimmedValue = value.trim();
+  if (!trimmedValue) return null;
+  
+  // Try to parse as date
+  const date = new Date(trimmedValue);
+  
+  // Check if it's a valid date
+  if (Number.isNaN(date.getTime())) {
+    console.warn(`Invalid date format: "${value}"`);
+    return null;
+  }
+  
   return date;
 }
 
