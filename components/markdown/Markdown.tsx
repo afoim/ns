@@ -114,6 +114,8 @@ export default function Markdown({ content }: { content: string }) {
           </td>
         ),
       }}
-    />
+    >
+      {content}
+    </ReactMarkdown>
   );
 }

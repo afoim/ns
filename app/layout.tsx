@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
+import { siteConfig } from "@/lib/config";
 
 import "yet-another-react-lightbox/plugins/captions.css";
 import "yet-another-react-lightbox/plugins/counter.css";
@@ -22,10 +23,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "2x Blog",
-    template: "%s | 2x Blog",
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.title}`,
   },
-  description: "静态 Markdown 博客（支持少量 SSR）",
+  description: siteConfig.description,
+  icons: siteConfig.favicon.map((favicon) => ({
+    url: favicon.src,
+    sizes: favicon.sizes,
+  })),
 };
 
 export default function RootLayout({
@@ -34,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full">
+    <html lang={siteConfig.lang.replace("_", "-")} className="h-full">
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-full antialiased`}
       >
